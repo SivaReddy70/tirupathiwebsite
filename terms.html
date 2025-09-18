@@ -1,58 +1,39 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="GlobalTech Solutions Terms of Service - Rules for using our global software consultancy services and website.">
+  <meta name="description" content="GlobalTech Solutions - Terms of Service">
   <title>Terms of Service - GlobalTech Solutions</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     body {
       font-family: 'Roboto', Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f9fafb;
-      color: #1f2937;
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+      color: #f9fafb;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://source.unsplash.com/random/1920x1080?technology') no-repeat center/cover;
+      opacity: 0.2;
+      z-index: 0;
+      animation: pulse 10s infinite;
+    }
+    body > * {
+      position: relative;
+      z-index: 1;
     }
     .navbar {
       background-color: #1e40af;
@@ -100,36 +81,73 @@
       font-size: 24px;
       cursor: pointer;
     }
-    section {
-      max-width: 900px;
-      margin: 40px auto;
+    .content {
+      flex: 1;
       padding: 40px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 20px;
     }
-    h1, h2 {
-      color: #1e40af;
+    .sidebar {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(5px);
+    }
+    .sidebar h3 {
+      color: #f97316;
+      margin-bottom: 15px;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar ul li a {
+      color: #e5e7eb;
+      text-decoration: none;
+      display: block;
+      padding: 8px 0;
+      transition: color 0.3s;
+    }
+    .sidebar ul li a:hover {
+      color: #60a5fa;
+    }
+    .main-content {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(5px);
     }
     h1 {
+      color: #f97316;
       font-size: 32px;
       margin-bottom: 20px;
     }
     h2 {
+      color: #3b82f6;
       font-size: 24px;
-      margin-top: 30px;
-      margin-bottom: 15px;
+      margin-top: 20px;
     }
-    p, li {
+    p {
       font-size: 16px;
       line-height: 1.6;
+      color: #e5e7eb;
+      margin-bottom: 15px;
     }
-    a {
+    details {
+      margin: 15px 0;
+    }
+    summary {
       color: #3b82f6;
-      text-decoration: none;
+      cursor: pointer;
+      font-weight: 500;
     }
-    a:hover {
-      text-decoration: underline;
+    details[open] summary {
+      margin-bottom: 10px;
     }
     footer {
       background-color: #1f2937;
@@ -139,6 +157,13 @@
     }
     footer a {
       color: #60a5fa;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    @keyframes pulse {
+      0% { opacity: 0.2; }
+      50% { opacity: 0.3; }
+      100% { opacity: 0.2; }
     }
     @media (max-width: 768px) {
       .navbar {
@@ -163,9 +188,18 @@
       .hamburger {
         display: block;
       }
-      section {
+      .content {
+        grid-template-columns: 1fr;
         padding: 20px;
-        margin: 20px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+      p {
+        font-size: 14px;
       }
     }
   </style>
@@ -187,53 +221,61 @@
     <div class="hamburger" aria-label="Menu toggle" role="button">☰</div>
   </nav>
 
-  <section role="region" aria-label="Terms of Service">
-    <h1>Terms of Service</h1>
-    <p>Last updated: September 18, 2025</p>
-    <p>Welcome to GlobalTech Solutions. These Terms of Service govern your use of our website and software consultancy services. By using our site or services, you agree to these terms.</p>
+  <div class="content">
+    <div class="sidebar" role="navigation" aria-label="Terms of Service Navigation">
+      <h3>Sections</h3>
+      <ul>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#payment">Payment</a></li>
+        <li><a href="#liability">Liability</a></li>
+        <li><a href="#termination">Termination</a></li>
+        <li><a href="#contact-info">Contact Info</a></li>
+      </ul>
+    </div>
+    <div class="main-content" role="main">
+      <h1>Terms of Service</h1>
+      <h2 id="introduction">Introduction</h2>
+      <p>These Terms of Service govern your use of GlobalTech Solutions' software consultancy services. By accessing our website, you agree to these terms.</p>
+      <details>
+        <summary>Details</summary>
+        <p>Effective as of [Insert Date], governed by the laws of [Your Country/State], [Your Jurisdiction].</p>
+      </details>
 
-    <h2>1. Use of Our Website</h2>
-    <p>You may use our website to learn about our services (web development, mobile apps, AI, cybersecurity, etc.) and submit inquiries via our contact form. You agree to provide accurate information and not misuse the site.</p>
+      <h2 id="services">Services</h2>
+      <p>We provide software development, cloud solutions, AI, and cybersecurity services as outlined on our website.</p>
+      <details>
+        <summary>Details</summary>
+        <p>Service scope and deliverables are defined in project agreements.</p>
+      </details>
 
-    <h2>2. Our Services</h2>
-    <p>We provide software consultancy services for industries like healthcare, finance, and retail. Service agreements are established after inquiries are processed and mutually agreed upon.</p>
+      <h2 id="payment">Payment</h2>
+      <p>Payment terms are agreed upon in writing and must be fulfilled per the project timeline.</p>
+      <details>
+        <summary>Details</summary>
+        <p>Late payments may incur a [X%] fee; contact us for specifics.</p>
+      </details>
 
-    <h2>3. User Responsibilities</h2>
-    <p>You agree to:</p>
-    <ul>
-      <li>Provide accurate and complete information in the contact form.</li>
-      <li>Not use our site for illegal activities or to submit malicious content.</li>
-      <li>Comply with all applicable laws.</li>
-    </ul>
+      <h2 id="liability">Liability</h2>
+      <p>GlobalTech Solutions is not liable for indirect damages arising from service use.</p>
+      <details>
+        <summary>Details</summary>
+        <p>Liability is limited to the amount paid for services.</p>
+      </details>
 
-    <h2>4. Limitation of Liability</h2>
-    <p>GlobalTech Solutions is not liable for any damages arising from your use of our website or services, including service interruptions or data inaccuracies, to the extent permitted by law.</p>
+      <h2 id="termination">Termination</h2>
+      <p>Either party may terminate services with [X days] notice, subject to project milestones.</p>
+      <details>
+        <summary>Details</summary>
+        <p>Termination details are outlined in the service agreement.</p>
+      </details>
 
-    <h2>5. Intellectual Property</h2>
-    <p>All content on our website, including text and designs, is owned by GlobalTech Solutions. You may not reproduce or distribute it without permission.</p>
-
-    <h2>6. Termination</h2>
-    <p>We reserve the right to terminate access to our website or services if you violate these terms.</p>
-
-    <h2>7. Governing Law</h2>
-    <p>These terms are governed by the laws of [Your Country/State]. Disputes will be resolved in the courts of [Your Jurisdiction].</p>
-
-    <h2>8. Contact Us</h2>
-    <p>For questions about these terms, contact us via our <a href="/#contact">contact form</a>.</p>
-  </section>
+      <h2 id="contact-info">Contact Info</h2>
+      <p>For questions, email us at [support@globaltechsolutions.com] or visit our <a href="/#contact">Contact Page</a>.</p>
+    </div>
+  </div>
 
   <footer role="contentinfo">
     <p>&copy; 2025 GlobalTech Solutions. All rights reserved.</p>
     <p><a href="/privacy" aria-label="Privacy Policy">Privacy Policy</a> | <a href="/terms" aria-label="Terms of Service">Terms of Service</a></p>
-  </footer>
-
-  <script>
-    // Hamburger menu toggle
-    document.querySelector('.hamburger').addEventListener('click', () => {
-      const navLinks = document.querySelector('.nav-links');
-      navLinks.classList.toggle('active');
-      document.querySelector('.hamburger').setAttribute('aria-expanded', navLinks.classList.contains('active'));
-    });
-  </script>
-</body>
-</html>
+  </footer

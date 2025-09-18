@@ -3,17 +3,223 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Submission Successful</title>
+  <meta name="description" content="GlobalTech Solutions - Form Submission Successful">
+  <title>Submission Successful - GlobalTech Solutions</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-    body { font-family: 'Roboto', Arial, sans-serif; text-align: center; padding: 50px; background: #f9fafb; }
-    h1 { color: #1e40af; }
-    a { color: #3b82f6; text-decoration: none; }
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+      color: #f9fafb;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://source.unsplash.com/random/1920x1080?technology') no-repeat center/cover;
+      opacity: 0.2;
+      z-index: 0;
+      animation: pulse 10s infinite;
+    }
+    body > * {
+      position: relative;
+      z-index: 1;
+    }
+    .navbar {
+      background-color: #1e40af;
+      padding: 15px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .logo {
+      color: white;
+      font-size: 28px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+    .logo i {
+      margin-right: 10px;
+    }
+    .nav-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+    .nav-links li {
+      margin-left: 30px;
+    }
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: #60a5fa;
+    }
+    .hamburger {
+      display: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .success-card {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(5px);
+    }
+    h1 {
+      color: #f97316;
+      font-size: 32px;
+      margin-bottom: 20px;
+      animation: fadeIn 1s ease-in;
+    }
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 600px;
+      color: #e5e7eb;
+    }
+    a {
+      color: #3b82f6;
+      text-decoration: none;
+      font-size: 18px;
+      margin-top: 20px;
+      padding: 12px 24px;
+      border: 1px solid #3b82f6;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+    a:hover {
+      background-color: #3b82f6;
+      color: white;
+    }
+    footer {
+      background-color: #1f2937;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    footer a {
+      color: #60a5fa;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0% { opacity: 0.2; }
+      50% { opacity: 0.3; }
+      100% { opacity: 0.2; }
+    }
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 15px 20px;
+      }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background-color: #1e40af;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .nav-links li {
+        margin: 10px 0;
+        text-align: center;
+      }
+      .hamburger {
+        display: block;
+      }
+      section {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      p {
+        font-size: 16px;
+      }
+      .success-card {
+        padding: 20px;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Thank You!</h1>
-  <p>Your inquiry has been received. We’ll contact you within 24 hours.</p>
-  <p><a href="/">Return to Home</a></p>
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="logo" aria-label="GlobalTech Solutions logo">
+      <i class="fas fa-laptop-code"></i> GlobalTech Solutions
+    </div>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/#industries">Industries</a></li>
+      <li><a href="/#testimonials">Testimonials</a></li>
+      <li><a href="/#portfolio">Portfolio</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+    <div class="hamburger" aria-label="Menu toggle" role="button">☰</div>
+  </nav>
+
+  <section role="region" aria-label="Form Submission Success">
+    <div class="success-card">
+      <h1>Thank You!</h1>
+      <p>Your inquiry has been received. Our team will contact you within 24 hours to discuss your software needs.</p>
+      <a href="/">Return to Home</a>
+    </div>
+  </section>
+
+  <footer role="contentinfo">
+    <p>&copy; 2025 GlobalTech Solutions. All rights reserved.</p>
+    <p><a href="/privacy" aria-label="Privacy Policy">Privacy Policy</a> | <a href="/terms" aria-label="Terms of Service">Terms of Service</a></p>
+  </footer>
+
+  <script>
+    // Hamburger menu toggle
+    document.querySelector('.hamburger').addEventListener('click', () => {
+      const navLinks = document.querySelector('.nav-links');
+      navLinks.classList.toggle('active');
+      document.querySelector('.hamburger').setAttribute('aria-expanded', navLinks.classList.contains('active'));
+    });
+  </script>
 </body>
 </html>
