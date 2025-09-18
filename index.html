@@ -553,23 +553,24 @@
     <p>Fill out the form below to discuss your software needs. We’ll respond within 24 hours.</p>
     <div class="form-container">
       <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="contact">
-        <p class="hidden">
-          <label>Don’t fill this out if you're human: <input name="bot-field"></label>
-        </p>
-        <input type="text" name="name" placeholder="Your Name" required aria-label="Your Name">
-        <input type="email" name="email" placeholder="Your Email" required aria-label="Your Email">
-        <select name="service" required aria-label="Service Type">
-          <option value="" disabled selected>Select a Service</option>
-          <option value="Web Development">Web Development</option>
-          <option value="Mobile Apps">Mobile Apps</option>
-          <option value="Cloud Solutions">Cloud Solutions</option>
-          <option value="Custom Software">Custom Software</option>
-        </select>
-        <textarea name="message" placeholder="Your Message" required aria-label="Your Message"></textarea>
-        <label><input type="checkbox" name="gdpr-consent" required aria-label="GDPR Consent"> I agree to the Privacy Policy</label>
-        <button type="submit">Submit</button>
-      </form>
+  <input type="hidden" name="form-name" value="contact">
+  <p class="hidden">
+    <label>Don’t fill this out if you're human: <input name="bot-field"></label>
+  </p>
+  <input type="text" name="name" placeholder="Your Name" required aria-label="Your Name">
+  <input type="email" name="email" placeholder="Your Email" required aria-label="Your Email">
+  <select name="service" required aria-label="Service Type">
+    <option value="" disabled selected>Select a Service</option>
+    <option value="Web Development">Web Development</option>
+    <option value="Mobile Apps">Mobile Apps</option>
+    <option value="Cloud Solutions">Cloud Solutions</option>
+    <option value="Custom Software">Custom Software</option>
+  </select>
+  <textarea name="message" placeholder="Your Message" required aria-label="Your Message"></textarea>
+  <label><input type="checkbox" name="gdpr-consent" required aria-label="GDPR Consent"> I agree to the Privacy Policy</label>
+  <button type="submit">Submit <span class="spinner"></span></button>
+  <p class="form-error">Failed to submit. Please try again.</p>
+</form>
     </div>
     <p class="gdpr-notice">By submitting this form, you agree to our <a href="#privacy" aria-label="Privacy Policy">Privacy Policy</a> in compliance with GDPR and CCPA.</p>
   </section>
