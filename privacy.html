@@ -1,0 +1,250 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GlobalTech Solutions Privacy Policy - How we collect, use, and protect your data for our global software consultancy services.">
+  <title>Privacy Policy - GlobalTech Solutions</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9fafb;
+      color: #1f2937;
+    }
+    .navbar {
+      background-color: #1e40af;
+      padding: 15px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .logo {
+      color: white;
+      font-size: 28px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+    .logo i {
+      margin-right: 10px;
+    }
+    .nav-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+    .nav-links li {
+      margin-left: 30px;
+    }
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: #60a5fa;
+    }
+    .hamburger {
+      display: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    section {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 40px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+      color: #1e40af;
+    }
+    h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-size: 24px;
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
+    p, li {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    a {
+      color: #3b82f6;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      background-color: #1f2937;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    footer a {
+      color: #60a5fa;
+    }
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 15px 20px;
+      }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background-color: #1e40af;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .nav-links li {
+        margin: 10px 0;
+        text-align: center;
+      }
+      .hamburger {
+        display: block;
+      }
+      section {
+        padding: 20px;
+        margin: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="logo" aria-label="GlobalTech Solutions logo">
+      <i class="fas fa-laptop-code"></i> GlobalTech Solutions
+    </div>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/#industries">Industries</a></li>
+      <li><a href="/#testimonials">Testimonials</a></li>
+      <li><a href="/#portfolio">Portfolio</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+    <div class="hamburger" aria-label="Menu toggle" role="button">☰</div>
+  </nav>
+
+  <section role="region" aria-label="Privacy Policy">
+    <h1>Privacy Policy</h1>
+    <p>Last updated: September 18, 2025</p>
+    <p>At GlobalTech Solutions, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, store, and protect your personal information when you use our website or services, in compliance with GDPR and CCPA.</p>
+
+    <h2>1. Information We Collect</h2>
+    <p>We collect personal information you provide through our contact form, including:</p>
+    <ul>
+      <li>Name</li>
+      <li>Email address</li>
+      <li>Service type (e.g., Web Development, AI & Machine Learning)</li>
+      <li>Message content</li>
+    </ul>
+    <p>We also collect non-personal data via Google Analytics, such as IP addresses and browsing behavior, to improve our services.</p>
+
+    <h2>2. How We Use Your Information</h2>
+    <p>Your data is used to:</p>
+    <ul>
+      <li>Respond to your inquiries about our software services (e.g., web, mobile, cloud, cybersecurity).</li>
+      <li>Provide personalized consultancy services for industries like healthcare, finance, and retail.</li>
+      <li>Improve our website and user experience.</li>
+    </ul>
+
+    <h2>3. Data Storage and Security</h2>
+    <p>Your data is stored securely on Netlify’s servers, protected by encryption and access controls. We use a honeypot field to prevent spam. Data is retained only as long as necessary to fulfill your inquiry or as required by law.</p>
+
+    <h2>4. Data Sharing</h2>
+    <p>We do not sell or share your personal data with third parties, except with trusted service providers (e.g., Netlify for form storage) who comply with GDPR/CCPA. We may share anonymized data for analytics purposes.</p>
+
+    <h2>5. Your Rights</h2>
+    <p>Under GDPR and CCPA, you have the right to:</p>
+    <ul>
+      <li>Access your personal data.</li>
+      <li>Request corrections or deletion.</li>
+      <li>Opt-out of data processing.</li>
+      <li>Request a copy of your data.</li>
+    </ul>
+    <p>Contact us via our <a href="/#contact">contact form</a> to exercise these rights.</p>
+
+    <h2>6. Cookies</h2>
+    <p>We use cookies for Google Analytics to track site usage. You can manage cookie preferences via your browser settings.</p>
+
+    <h2>7. Contact Us</h2>
+    <p>For questions or concerns about your data, contact us via our <a href="/#contact">contact form</a>.</p>
+  </section>
+
+  <footer role="contentinfo">
+    <p>&copy; 2025 GlobalTech Solutions. All rights reserved.</p>
+    <p><a href="/privacy" aria-label="Privacy Policy">Privacy Policy</a> | <a href="/terms" aria-label="Terms of Service">Terms of Service</a></p>
+  </footer>
+
+  <script>
+    // Hamburger menu toggle
+    document.querySelector('.hamburger').addEventListener('click', () => {
+      const navLinks = document.querySelector('.nav-links');
+      navLinks.classList.toggle('active');
+      document.querySelector('.hamburger').setAttribute('aria-expanded', navLinks.classList.contains('active'));
+    });
+  </script>
+</body>
+</html>
