@@ -17,7 +17,7 @@
     }
     #progress-bar { position:fixed; top:0; left:0; width:0%; height:5px; background:#3b82f6; z-index:1001; transition:width .3s; }
 
-    /* NAVBAR - Logo left, Menu right next to it */
+    /* NAVBAR */
     .navbar {
       background:#1e40af;
       padding:16px 40px;
@@ -27,7 +27,7 @@
       display:flex;
       align-items:center;
       justify-content:flex-start;
-      gap:70px;                    /* Perfect small gap between logo and menu */
+      gap:70px;
       box-shadow:0 4px 20px rgba(0,0,0,0.35);
     }
     .logo img {
@@ -51,9 +51,7 @@
       transition:.3s;
     }
     .nav-links a:hover,
-    .nav-links a.active {
-      color:#60a5fa;
-    }
+    .nav-links a.active { color:#60a5fa; }
     .hamburger { display:none; cursor:pointer; font-size:28px; color:white; margin-left:auto; }
 
     .container { max-width:1240px; margin:0 auto; padding:60px 20px; }
@@ -74,7 +72,7 @@
     .card h3 { color:#f97316; font-size:24px; margin-bottom:18px; text-align:center; }
     .card ul { list-style:none; padding-left:5px; }
     .card li { position:relative; padding-left:32px; margin:14px 0; font-size:16px; }
-    
+    .card li:before { content:"✓"; position:absolute; left:0; color:#22c55e; font-weight:bold; }
 
     .contact-form { max-width:640px; margin:40px auto; text-align:left; display:flex; flex-direction:column; gap:18px; }
     .contact-form input, .contact-form textarea, .contact-form select {
@@ -85,6 +83,13 @@
     }
     .contact-form button:hover { background:#1e40af; }
     .hidden { display:none !important; }
+
+    /* Success Message */
+    #success-message {
+      display:none; padding:40px; background:rgba(34,197,94,0.25); border:3px solid #22c55e; border-radius:16px; margin:40px auto; max-width:640px;
+    }
+    #success-message h3 { color:#22c55e; font-size:32px; margin-bottom:15px; }
+    #success-message p { font-size:19px; }
 
     footer { background:#1f2937; padding:35px; margin-top:80px; font-size:15px; }
     footer a { color:#60a5fa; }
@@ -97,15 +102,7 @@
       .navbar { justify-content:space-between; gap:0; }
       .logo img { height:58px; }
       .nav-links {
-        position:fixed;
-        top:90px;
-        left:0;
-        width:100%;
-        background:#1e40af;
-        flex-direction:column;
-        padding:25px 0;
-        display:none;
-        box-shadow:0 10px 20px rgba(0,0,0,0.4);
+        position:fixed; top:90px; left:0; width:100%; background:#1e40af; flex-direction:column; padding:25px 0; display:none; box-shadow:0 10px 20px rgba(0,0,0,0.4);
       }
       .nav-links.active { display:flex; }
       .hamburger { display:block; }
@@ -117,7 +114,7 @@
 
   <nav class="navbar">
     <a href="#home" class="logo">
-      <img src="logo.png" alt="AyroMatrix">
+      <img src="logo.png" alt="AyroMatrix Logo">
     </a>
     <ul class="nav-links">
       <li><a href="#home" class="active">Home</a></li>
@@ -160,45 +157,30 @@
       <h2>Specialized Integration & Support Services</h2>
       <p>Deep expertise in WSO2, architecture, databases & ongoing support</p>
       <div class="grid">
-        <div class="card"><h3>WSO2 Consulting</h3><ul>
-          <li>WSO2 MI Setup (30–35 hrs)</li>
-          <li>MI Cluster Setup (40–50 hrs)</li>
-          <li>APIM Setup (40–45 hrs)</li>
-          <li>APIM + MI Full Stack (70–100 hrs)</li>
-          <li>Custom API Development (3–8 hrs/API)</li>
-          <li>API Security Hardening (10–15 hrs)</li>
-        </ul></div>
-        <div class="card"><h3>Architecture & Design</h3><ul>
-          <li>HLD Document (8–15 hrs)</li>
-          <li>LLD Document (10–20 hrs)</li>
-          <li>Infrastructure Architecture (12–25 hrs)</li>
-        </ul></div>
-        <div class="card"><h3>Database Services</h3><ul>
-          <li>DB Setup & Configuration (8–15 hrs)</li>
-          <li>DB Migration (15–40 hrs)</li>
-          <li>Performance Tuning (8–20 hrs)</li>
-        </ul></div>
-        <div class="card"><h3>Support & KT</h3><ul>
-          <li>L2/L3 Support (hourly/retainer)</li>
-          <li>Monthly Retainer – 20 hrs</li>
-          <li>KT Sessions – 2 hrs each</li>
-        </ul></div>
+        <div class="card"><h3>WSO2 Consulting</h3><ul><li>WSO2 MI Setup (30–35 hrs)</li><li>MI Cluster Setup (40–50 hrs)</li><li>APIM Setup (40–45 hrs)</li><li>APIM + MI Full Stack (70–100 hrs)</li><li>Custom API Development (3–8 hrs/API)</li><li>API Security Hardening (10–15 hrs)</li></ul></div>
+        <div class="card"><h3>Architecture & Design</h3><ul><li>HLD Document (8–15 hrs)</li><li>LLD Document (10–20 hrs)</li><li>Infrastructure Architecture (12–25 hrs)</li></ul></div>
+        <div class="card"><h3>Database Services</h3><ul><li>DB Setup & Configuration (8–15 hrs)</li><li>DB Migration (15–40 hrs)</li><li>Performance Tuning (8–20 hrs)</li></ul></div>
+        <div class="card"><h3>Support & KT</h3><ul><li>L2/L3 Support (hourly/retainer)</li><li>Monthly Retainer – 20 hrs</li><li>KT Sessions – 2 hrs each</li></ul></div>
       </div>
       <a href="#contact" class="cta-button" style="margin-top:40px;">Request Custom Quote</a>
     </div>
 
+    <!-- CONTACT + SUCCESS MESSAGE -->
     <div class="section-card" id="contact">
       <h2>Contact Us</h2>
       <p>Email: <strong>ayromatrix@gmail.com</strong> • We reply within 24 hours</p>
-      <form name="contact" method="POST" netlify-honeypot="bot-field" hidden>
-        <input type="text" name="name" />
-        <input type="email" name="email" />
-        <select name="service"></select>
-        <textarea name="message"></textarea>
-      </form>
-      <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+
+      <!-- Success Message -->
+      <div id="success-message">
+        <h3>Thank You!</h3>
+        <p>Your message has been sent successfully.<br>We’ll get back to you within 24 hours.</p>
+      </div>
+
+      <!-- Contact Form -->
+      <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="contact-form">
         <input type="hidden" name="form-name" value="contact" />
-        <p class="hidden"><label>Don't fill: <input name="bot-field" /></label></p>
+        <p class="hidden"><label>Don’t fill this out: <input name="bot-field" /></label></p>
+
         <input type="text" name="name" placeholder="Your Name *" required />
         <input type="email" name="email" placeholder="Your Email *" required />
         <select name="service" required>
@@ -220,19 +202,39 @@
     <p>© 2025 AyroMatrix • <a href="mailto:ayromatrix@gmail.com">ayromatrix@gmail.com</a></p>
   </footer>
 
+  <!-- Scripts -->
   <script>
+    // Progress bar
     window.addEventListener('scroll', () => {
       const s = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
       document.getElementById('progress-bar').style.width = s + '%';
     });
+
+    // Mobile menu
     document.querySelector('.hamburger').addEventListener('click', () => {
       document.querySelector('.nav-links').classList.toggle('active');
     });
+
+    // Smooth scrolling
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
         e.preventDefault();
         document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior:'smooth' });
       });
+    });
+
+    // Netlify Form Success Handler
+    window.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('contact-form');
+      const success = document.getElementById('success-message');
+
+      if (window.location.search.includes('success')) {
+        form.style.display = 'none';
+        success.style.display = 'block';
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 3000);
+      }
     });
   </script>
 </body>
