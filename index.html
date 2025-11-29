@@ -190,24 +190,21 @@
       </div>
 
       <!-- Contact Form -->
-      <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="contact-form">
-        <input type="hidden" name="form-name" value="contact" />
-        <p class="hidden"><label>Don’t fill this out: <input name="bot-field" /></label></p>
-
-        <input type="text" name="name" placeholder="Your Name *" required />
-        <input type="email" name="email" placeholder="Your Email *" required />
-        <select name="service" required>
-          <option value="" disabled selected>Select Service</option>
-          <option>Web/App Development</option>
-          <option>Cloud & DevOps</option>
-          <option>WSO2 / API Integration</option>
-          <option>Architecture & Design</option>
-          <option>Database Services</option>
-          <option>Support & Maintenance</option>
-        </select>
-        <textarea name="message" placeholder="Your Message *" rows="5" required></textarea>
-        <button type="submit">Send Message</button>
-      </form>
+     <form class="contact-form" id="contact-form" onsubmit="return handleSubmit(event)">
+  <input type="text" name="name" placeholder="Your Name *" required />
+  <input type="email" name="email" placeholder="Your Email *" required />
+  <select name="service" required>
+    <option value="" disabled selected>Select Service</option>
+    <option>Web/App Development</option>
+    <option>Cloud & DevOps</option>
+    <option>WSO2 / API Integration</option>
+    <option>Architecture & Design</option>
+    <option>Database Services</option>
+    <option>Support & Maintenance</option>
+  </select>
+  <textarea name="message" placeholder="Your Message *" rows="5" required></textarea>
+  <button type="submit">Send Message</button>
+</form>
     </div>
   </div>
 
@@ -254,6 +251,35 @@
       }
     });
   </script>
+  <script>
+  // Keep all your other scripts (progress bar, mobile menu, smooth scroll) — unchanged
+
+  // NEW CLOUDFLARE FORM HANDLER
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
+    const button = form.querySelector('button');
+    button.disabled = true;
+    button.textContent = "Sending...";
+
+    try {
+      const res = await fetch('/submit-form', { method: 'POST', body: data });
+      if (res.ok) {
+        form.style.display = 'none';
+        document.getElementById('success-message').style.display = 'block';
+      } else {
+        alert("Error sending. Please email ayromatrix@gmail.com directly.");
+      }
+    } catch (err) {
+      alert("No internet. Try again or email us.");
+    } finally {
+      button.disabled = false;
+      button.textContent = "Send Message";
+    }
+  }
+</script>
+  
 </body>
 
 </html>
